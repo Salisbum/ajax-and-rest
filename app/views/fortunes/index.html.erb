@@ -1,0 +1,28 @@
+<h1>Fortunes</h1>
+
+<div class="fortunes">
+  <% @fortunes.each do |fortune| %>
+    <div class="callout success" id="fortune-<%= fortune.id %>">
+      <span><%= fortune.content %></span>
+      <%= button_to "delete", api_fortune_path(fortune), :method => :delete, id: "#{fortune.id}"%>
+      <%= button_tag "[Edit]", class: 'edit' %>
+      <div class="update-form" style="display:none">
+        <%= form_for fortune, data: {id: fortune.id}, method: 'put' do |f| %>
+          <%= f.label :content %>
+          <%= f.text_field :content %>
+          <%= f.hidden_field(:id, value: fortune.id) %>
+          <%= f.submit %>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+
+<hr />
+
+<h3>New Fortune</h3>
+<%= form_for :fortune, html: { id: :new_fortune } do |f| %>
+  <%= f.label :content %>
+  <%= f.text_field :content %>
+  <%= f.submit %>
+<% end %>
